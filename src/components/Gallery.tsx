@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
-import Lightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css";
 
 import img1 from "../assets/images/gal1.jpg";
 import img2 from "../assets/images/gal2.jpg";
@@ -88,17 +86,8 @@ const Row = styled.div<{ direction?: "normal" | "reverse" }>`
 // Image arrays
 const topImages = [img1, img2, img3, img4, img5, img6, img7];
 const bottomImages = [...topImages].reverse();
-const allImages = [...topImages, ...bottomImages];
 
 const Gallery: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [photoIndex, setPhotoIndex] = useState(0);
-
-  const openLightbox = (index: number) => {
-    setPhotoIndex(index);
-    setIsOpen(true);
-  };
-
   return (
     <Wrapper id="gallery">
       <Heading>Vulayi Moments</Heading>
@@ -111,7 +100,6 @@ const Gallery: React.FC = () => {
               key={`top-${i}`}
               src={src}
               alt={`Top ${i}`}
-              onClick={() => openLightbox(i % topImages.length)}
               whileHover={{ scale: 1.05 }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -129,9 +117,6 @@ const Gallery: React.FC = () => {
               key={`bottom-${i}`}
               src={src}
               alt={`Bottom ${i}`}
-              onClick={() =>
-                openLightbox(topImages.length + (i % bottomImages.length))
-              }
               whileHover={{ scale: 1.05 }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -140,26 +125,6 @@ const Gallery: React.FC = () => {
           ))}
         </ImageTrack>
       </Row>
-
-      {/* Lightbox */}
-      {isOpen && (
-        <Lightbox
-          mainSrc={allImages[photoIndex]}
-          nextSrc={allImages[(photoIndex + 1) % allImages.length]}
-          prevSrc={
-            allImages[(photoIndex + allImages.length - 1) % allImages.length]
-          }
-          onCloseRequest={() => setIsOpen(false)}
-          onMovePrevRequest={() =>
-            setPhotoIndex(
-              (photoIndex + allImages.length - 1) % allImages.length
-            )
-          }
-          onMoveNextRequest={() =>
-            setPhotoIndex((photoIndex + 1) % allImages.length)
-          }
-        />
-      )}
     </Wrapper>
   );
 };

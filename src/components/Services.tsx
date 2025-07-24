@@ -198,7 +198,7 @@ const services = {
 
 // Main Component
 const Services: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("Rooms & Suites");
+  const [activeTab, setActiveTab] = useState(categories[0]); // Use first category as default
 
   return (
     <Section id="services">
@@ -218,7 +218,7 @@ const Services: React.FC = () => {
       </Tabs>
 
       <CardsWrapper>
-        {services[activeTab].map((item, index) => (
+        {services[activeTab]?.map((item, index) => (
           <Card
             key={index}
             initial={{ opacity: 0, y: 20 }}
