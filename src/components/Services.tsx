@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { colors } from "../assets/styles/color";
 import img1 from "../assets/images/gal1.jpg";
 import img2 from "../assets/images/gal2.jpg";
-import img3 from "../assets/images/gal3.jpg";
 import img4 from "../assets/images/gal4.jpg";
 import img5 from "../assets/images/gal5.jpg";
 import img6 from "../assets/images/gal6.jpg";
@@ -135,9 +134,16 @@ const BookButton = styled.a`
 `;
 
 // Services data with images
-const categories = ["Rooms & Suites", "Space Booking", "Event Hosting"];
+type ServiceCategory = "Rooms & Suites" | "Space Booking" | "Event Hosting";
 
-const services = {
+const categories: ServiceCategory[] = ["Rooms & Suites", "Space Booking", "Event Hosting"];
+
+const services: Record<ServiceCategory, {
+  name: string;
+  price: string;
+  description: string;
+  image: string;
+}[]> = {
   "Rooms & Suites": [
     {
       name: "Deluxe Room",
@@ -198,7 +204,7 @@ const services = {
 
 // Main Component
 const Services: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(categories[0]); // Use first category as default
+  const [activeTab, setActiveTab] = useState<ServiceCategory>(categories[0]); // Use first category as default
 
   return (
     <Section id="services">
